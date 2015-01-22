@@ -1,7 +1,7 @@
 # Car-Inventory
 Java GUI Application using JPA
 
-Features
+##Features
 * Add car
 * Update car
 * Search cars
