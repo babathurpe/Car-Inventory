@@ -10,9 +10,13 @@ import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Vector;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -39,7 +43,7 @@ public class AppFrame extends javax.swing.JFrame {
 
     public void clearFields() {
         carYearFormattedTextField.setText(null);
-        mileageTextField.setText(null);
+        carMileageTextField.setText(null);
         carPriceTextField.setText(null);
         makesComboBox.setSelectedIndex(0);
         carModelTextField.setText(null);
@@ -47,13 +51,13 @@ public class AppFrame extends javax.swing.JFrame {
         carColorTextField.setText(null);
         carEngineTextField.setText(null);
         transmissionComboBox.setSelectedIndex(0);
-        notesTextArea.setText(null);
+        carNotesTextArea.setText(null);
     }
 
     public boolean isFieldsEmpty() {
-        if (carYearFormattedTextField.getText().isEmpty() || mileageTextField.getText().isEmpty() || carPriceTextField.getText().isEmpty()
+        if (carYearFormattedTextField.getText().isEmpty() || carMileageTextField.getText().isEmpty() || carPriceTextField.getText().isEmpty()
                 || carModelTextField.getText().isEmpty() || carVinTextField.getText().isEmpty() || carColorTextField.getText().isEmpty()
-                || carEngineTextField.getText().isEmpty() || notesTextArea.getText().isEmpty() || transmissionComboBox.getSelectedIndex() == 0) {
+                || carEngineTextField.getText().isEmpty() || transmissionComboBox.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "All/Some fields are empty");
             return true;
         } else {
@@ -79,7 +83,6 @@ public class AppFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("carinventory?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
@@ -89,6 +92,8 @@ public class AppFrame extends javax.swing.JFrame {
         autosList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : autosQuery.getResultList();
         autosQuery1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT a FROM Autos a");
         autosList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : autosQuery1.getResultList();
+        autosQuery2 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT a FROM Autos a");
+        autosList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : autosQuery2.getResultList();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -101,7 +106,7 @@ public class AppFrame extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        mileageTextField = new javax.swing.JTextField();
+        carMileageTextField = new javax.swing.JTextField();
         carColorTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -110,7 +115,7 @@ public class AppFrame extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         makesComboBox = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        notesTextArea = new javax.swing.JTextArea();
+        carNotesTextArea = new javax.swing.JTextArea();
         jLabel10 = new javax.swing.JLabel();
         carModelTextField = new javax.swing.JTextField();
         transmissionComboBox = new javax.swing.JComboBox();
@@ -121,42 +126,44 @@ public class AppFrame extends javax.swing.JFrame {
         resetFieldsButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
+        selectCarIdComboBox = new javax.swing.JComboBox();
         jLabel15 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        priceTextField = new javax.swing.JTextField();
+        colorTextField = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
+        mileageTextField = new javax.swing.JTextField();
+        yearTextField = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        engineTextField = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        notesTextArea = new javax.swing.JTextArea();
         jLabel23 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jComboBox5 = new javax.swing.JComboBox();
-        jButton4 = new javax.swing.JButton();
+        modelTextField = new javax.swing.JTextField();
+        updateBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        vinTextField = new javax.swing.JFormattedTextField();
+        carMakeTextField = new javax.swing.JTextField();
+        transmissionTextField = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jButton5 = new javax.swing.JButton();
+        searchTextField = new javax.swing.JTextField();
+        modelRadioBtn = new javax.swing.JRadioButton();
+        yearRadioBtn = new javax.swing.JRadioButton();
+        brandRadioBtn = new javax.swing.JRadioButton();
+        priceRadioBtn = new javax.swing.JRadioButton();
+        colorRadioBtn = new javax.swing.JRadioButton();
+        searchButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        searchResultTable = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
@@ -217,7 +224,7 @@ public class AppFrame extends javax.swing.JFrame {
 
         jLabel4.setText("Color:");
 
-        mileageTextField.setToolTipText("Car's Mileage");
+        carMileageTextField.setToolTipText("Car's Mileage");
 
         carColorTextField.setToolTipText("Car Exterior Color");
 
@@ -231,13 +238,12 @@ public class AppFrame extends javax.swing.JFrame {
 
         jLabel6.setText("Car Model:");
 
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, makesList, makesComboBox);
-        bindingGroup.addBinding(jComboBoxBinding);
+        makesComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select", "Cheverolet", "Ford", "Lincoln", "Mercury", "Buick", "Dodge", "BMW", "Honda", "Datsun", "Audi", "Cadillac", "Chrysler", "GMC", "Hummer", "Hyundai", "Infiniti", "Isuzu", "Jaguar", "Jeep", "Kia", "Land Rover", "Mazda", "Mercedes-Benz", "Mitsubishi", "Nissan", "Oldsmobile", "Pontiac", "Saab", "Lexus", "Saturn" }));
 
-        notesTextArea.setColumns(20);
-        notesTextArea.setRows(5);
-        notesTextArea.setToolTipText("Additional notes on car");
-        jScrollPane1.setViewportView(notesTextArea);
+        carNotesTextArea.setColumns(20);
+        carNotesTextArea.setRows(5);
+        carNotesTextArea.setToolTipText("Additional notes on car");
+        jScrollPane1.setViewportView(carNotesTextArea);
 
         jLabel10.setText("Transmission:");
 
@@ -296,7 +302,7 @@ public class AppFrame extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addGap(21, 21, 21)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(mileageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(carMileageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(carVinTextField, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(carModelTextField)
                             .addComponent(makesComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -304,7 +310,7 @@ public class AppFrame extends javax.swing.JFrame {
                             .addComponent(carYearFormattedTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10)
@@ -367,7 +373,7 @@ public class AppFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel13))
                                 .addGap(10, 10, 10)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(mileageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(carMileageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel12)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -390,9 +396,9 @@ public class AppFrame extends javax.swing.JFrame {
 
         jLabel15.setText("Car VIN:");
 
-        jTextField7.setToolTipText("Enter Car Price");
+        priceTextField.setToolTipText("Enter Car Price");
 
-        jTextField8.setToolTipText("Enter Car VIN");
+        colorTextField.setToolTipText("Enter Car VIN");
 
         jLabel16.setText("Mileage:");
 
@@ -400,7 +406,7 @@ public class AppFrame extends javax.swing.JFrame {
 
         jLabel18.setText("Color:");
 
-        jTextField10.setToolTipText("Car Exterior Color");
+        yearTextField.setToolTipText("Car Exterior Color");
 
         jLabel19.setText("Car Make:");
 
@@ -408,36 +414,47 @@ public class AppFrame extends javax.swing.JFrame {
 
         jLabel21.setText("Notes:");
 
-        jTextField11.setToolTipText("Enter Car's Engine Type");
+        engineTextField.setToolTipText("Enter Car's Engine Type");
 
         jLabel22.setText("Car Model:");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        notesTextArea.setColumns(20);
+        notesTextArea.setRows(5);
+        jScrollPane2.setViewportView(notesTextArea);
 
         jLabel23.setText("Transmission:");
 
-        jTextField12.setToolTipText("Enter Car Model");
+        modelTextField.setToolTipText("Enter Car Model");
 
-        jButton3.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(0, 51, 204));
-        jButton3.setText("Update");
+        updateBtn.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        updateBtn.setForeground(new java.awt.Color(0, 51, 204));
+        updateBtn.setText("Update");
 
-        jButton4.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(0, 51, 204));
-        jButton4.setText("Delete");
+        deleteBtn.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        deleteBtn.setForeground(new java.awt.Color(0, 51, 204));
+        deleteBtn.setText("Delete");
 
         jLabel24.setText("Car Year:");
 
         jLabel25.setText("Price:");
 
         try {
-            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+            vinTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFormattedTextField2.setToolTipText("Enter Year");
+        vinTextField.setToolTipText("Enter Year");
+
+        jLabel27.setFont(new java.awt.Font("Lucida Grande", 3, 13)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel27.setText("** Car Make-Car Model-VIN");
+
+        jButton1.setText("Display");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -447,7 +464,7 @@ public class AppFrame extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -459,20 +476,20 @@ public class AppFrame extends javax.swing.JFrame {
                                         .addGap(1, 1, 1)))
                                 .addGap(16, 16, 16)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(mileageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(vinTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(colorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(yearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addComponent(jLabel19)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(carMakeTextField))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel22)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(modelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,78 +501,83 @@ public class AppFrame extends javax.swing.JFrame {
                                 .addComponent(jLabel23)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField11)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(53, 53, 53))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(transmissionTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(engineTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(priceTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel17)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel14)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(292, Short.MAX_VALUE))))
+                                .addComponent(selectCarIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel27)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(231, 231, 231)
-                .addComponent(jButton3)
+                .addGap(227, 227, 227)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addComponent(updateBtn))
                 .addGap(44, 44, 44)
-                .addComponent(jButton4)
+                .addComponent(deleteBtn)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel17)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(selectCarIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel27))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel17))
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
+                                .addGap(39, 39, 39)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel23)))
+                                    .addComponent(jLabel23)
+                                    .addComponent(transmissionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel22)
-                                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(modelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addGap(46, 46, 46)
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(vinTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel15)))
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(yearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel24))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel18)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(colorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(11, 11, 11)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mileageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel16)))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel25))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -563,13 +585,13 @@ public class AppFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel21)))))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel20)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel19)))
+                        .addComponent(engineTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel19)
+                        .addComponent(carMakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3))
+                    .addComponent(deleteBtn)
+                    .addComponent(updateBtn))
                 .addGap(50, 50, 50))
         );
 
@@ -579,63 +601,39 @@ public class AppFrame extends javax.swing.JFrame {
 
         jLabel26.setText("Enter Search Criteria:");
 
-        jTextField13.setText("jTextField13");
-        jTextField13.setToolTipText("Enter Search keywords");
+        searchTextField.setToolTipText("Enter Search keywords");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Model");
-        jRadioButton1.setToolTipText("Search by model");
+        buttonGroup1.add(modelRadioBtn);
+        modelRadioBtn.setText("Model");
+        modelRadioBtn.setToolTipText("Search by model");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Year");
-        jRadioButton2.setToolTipText("Search by year");
+        buttonGroup1.add(yearRadioBtn);
+        yearRadioBtn.setText("Year");
+        yearRadioBtn.setToolTipText("Search by year");
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("Brand");
-        jRadioButton3.setToolTipText("Search by brand");
+        buttonGroup1.add(brandRadioBtn);
+        brandRadioBtn.setText("Brand");
+        brandRadioBtn.setToolTipText("Search by brand");
 
-        buttonGroup1.add(jRadioButton4);
-        jRadioButton4.setText("Price");
-        jRadioButton4.setToolTipText("Search by price");
+        buttonGroup1.add(priceRadioBtn);
+        priceRadioBtn.setText("Price");
+        priceRadioBtn.setToolTipText("Search by price");
 
-        buttonGroup1.add(jRadioButton5);
-        jRadioButton5.setText("Color");
-        jRadioButton5.setToolTipText("Search by color");
+        buttonGroup1.add(colorRadioBtn);
+        colorRadioBtn.setText("Color");
+        colorRadioBtn.setToolTipText("Search by color");
 
-        jButton5.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(0, 51, 204));
-        jButton5.setText("Search");
+        searchButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        searchButton.setForeground(new java.awt.Color(0, 51, 204));
+        searchButton.setText("Search");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
 
-        jTable1.setAutoCreateRowSorter(true);
-
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, autosList1, jTable1);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${model}"));
-        columnBinding.setColumnName("Model");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${make}"));
-        columnBinding.setColumnName("Make");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${vin}"));
-        columnBinding.setColumnName("Vin");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${year}"));
-        columnBinding.setColumnName("Year");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${engine}"));
-        columnBinding.setColumnName("Engine");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${price}"));
-        columnBinding.setColumnName("Price");
-        columnBinding.setColumnClass(Double.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mileage}"));
-        columnBinding.setColumnName("Mileage");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${color}"));
-        columnBinding.setColumnName("Color");
-        columnBinding.setColumnClass(String.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane3.setViewportView(jTable1);
+        searchResultTable.setAutoCreateRowSorter(true);
+        jScrollPane3.setViewportView(searchResultTable);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -647,18 +645,18 @@ public class AppFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(modelRadioBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton3)
+                        .addComponent(brandRadioBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton4)
+                        .addComponent(priceRadioBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton5)
+                        .addComponent(colorRadioBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton2))
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
-                .addContainerGap(148, Short.MAX_VALUE))
+                        .addComponent(yearRadioBtn))
+                    .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchButton))
+                .addContainerGap(132, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3))
@@ -669,16 +667,16 @@ public class AppFrame extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton5)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton2))
+                    .addComponent(modelRadioBtn)
+                    .addComponent(colorRadioBtn)
+                    .addComponent(priceRadioBtn)
+                    .addComponent(brandRadioBtn)
+                    .addComponent(yearRadioBtn))
                 .addGap(7, 7, 7)
-                .addComponent(jButton5)
+                .addComponent(searchButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(163, 163, 163))
@@ -688,7 +686,6 @@ public class AppFrame extends javax.swing.JFrame {
 
         jTextArea3.setColumns(20);
         jTextArea3.setRows(5);
-        jTextArea3.setText("*Build DB\n*DB Connections\n*Add Btn\n*Reset Btn\n*Rename all text field, button. radio btn\n");
         jScrollPane4.setViewportView(jTextArea3);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -698,7 +695,7 @@ public class AppFrame extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addContainerGap(239, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -714,7 +711,10 @@ public class AppFrame extends javax.swing.JFrame {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -739,8 +739,6 @@ public class AppFrame extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        bindingGroup.bind();
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -753,16 +751,18 @@ public class AppFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         conn = DBConnect.ConnectToDatabase();
         System.out.println("Successfully connected to database");
+        UpdateSelectCarIdComboBox();
+
 
     }//GEN-LAST:event_formWindowOpened
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-        if (isFieldsEmpty()) {
-
+        while (!isFieldsEmpty()) {
+            System.out.println(11);
             String yearString = carYearFormattedTextField.getText();
             int year = Integer.parseInt(yearString);
-            String mileageString = mileageTextField.getText();
+            String mileageString = carMileageTextField.getText();
             float mileage = Float.parseFloat(mileageString);
             String priceString = carPriceTextField.getText();
             float price = Float.parseFloat(priceString);
@@ -778,23 +778,141 @@ public class AppFrame extends javax.swing.JFrame {
                 pst.setFloat(7, price);
                 pst.setString(8, carEngineTextField.getText().toUpperCase());
                 pst.setString(9, transmissionComboBox.getSelectedItem().toString().toUpperCase());
-                pst.setString(10, notesTextArea.getText());
+                pst.setString(10, carNotesTextArea.getText());
+                System.out.println(1);
                 pst.executeUpdate();
+                System.out.println(2);
 
                 JOptionPane.showMessageDialog(null, "Car Information has been added.");
+                UpdateSelectCarIdComboBox();
                 //closes all connections to queries and database.
                 pst.close();
                 conn.close();
+                //selectCarIdComboBox.
                 //clear text field and combo box to default null values after update.
                 clearFields();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Cannot add car info. Check entries and try again.\nContact Admin.");
                 System.out.println(e);//(null, e); //"Cannot add car info. Check entries and try again."
             }
-        } else {
-
         }
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // TODO add your handling code here:
+        String searchText = searchTextField.getText();
+        if (!searchText.isEmpty() && modelRadioBtn.isSelected()) {
+            try {
+                //model, make, vin, year, engine, price, mileage, color
+                //Select all information from table where center name matches
+                String sql = "select model, make, vin, year, engine, price, mileage, color from autos where model=?";
+                pst = conn.prepareStatement(sql);
+                //Get text from Seacrh textbox and replace in the sql query
+                pst.setString(1, searchText);
+                //Execute search for car using model
+                rs = pst.executeQuery();
+                searchResultTable.setModel(DbUtils.resultSetToTableModel(rs));
+//                pst.close();
+//                rs.close();
+//                conn.close();
+                // }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+                System.out.println(e);
+            }
+        }
+
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try{
+//             DeliveryTxt.setVisible(true);
+//             DeliveryLbl1.setVisible(true);
+//             dateLbl.setVisible(true);
+//             dateTxt.setVisible(true);
+//            //Select all information from table where center name matches
+//            String sql = "select * from suppliers where orderno=?";
+//            pst = conn.prepareStatement(sql);
+//            //Get text from Seacrh textbox
+//            pst.setString(1, SearchTxt.getText());
+//            //Search table for center name
+//            rs = pst.executeQuery();
+//            //if center name is available
+//            if(rs.next()){
+//                //Fetch and put available data from table into appropriate fields
+//                String setId = rs.getString("orderno");
+//                OrderNoTxt.setText(setId);
+//                String setSupplierName = rs.getString("supplier_name");
+//                SupplierNameTxt.setText(setSupplierName);
+//                String setItem = rs.getString("item");
+//                ItemTxt.setText(setItem);
+//                String setQty = rs.getString("quantity");
+//                QtyTxt.setText(setQty);
+//                String setUnitPrice = rs.getString("unitprice");
+//                UnitPriceTxt.setText(setUnitPrice);
+//                String setTotal = rs.getString("total");
+//                TotalTxt.setText(setTotal);
+//                String status = rs.getString("Status");
+//                DeliveryTxt.setText(status);
+//                String date = rs.getString("date");
+//                dateTxt.setText(date);
+//            }else{
+//                UpdateTable();
+//                JOptionPane.showMessageDialog(null, "Sorry, No match found. Search again.");
+//                DeliveryTxt.setVisible(false);
+//                DeliveryLbl1.setVisible(false);
+//                dateLbl.setVisible(false);
+//                dateTxt.setVisible(false);
+//                OrderNoTxt.setText(null);
+//                SupplierNameTxt.setText(null);
+//                ItemTxt.setText(null);
+//                QtyTxt.setText(null);
+//                UnitPriceTxt.setText(null);
+//                TotalTxt.setText(null);
+//                DeliveryCombo.setSelectedIndex(0);
+//          }
+        }
+         catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+    public boolean isCellEditable(int row, int column){
+        return false;
+        
+    }
+    private void UpdateSelectCarIdComboBox() {
+        selectCarIdComboBox.removeAllItems();
+        try {
+            String sql = "select make, vin, model from autos";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                String model = rs.getString("model");
+                String make = rs.getString("make");
+                String vin = rs.getString("vin");
+                String carId = make + "-" + model + " " + vin;
+                selectCarIdComboBox.addItem(carId);
+            }
+            pst.close();
+            rs.close();
+            conn.close();
+
+            //selectCarIdComboBox.setModel((ComboBoxModel) DbUtils.resultSetToTableModel(rs));
+            //SupplierTable.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+
+        } finally {
+            try {
+                rs.close();
+                pst.close();
+            } catch (Exception e) {
+
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -835,23 +953,27 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JButton addButton;
     private java.util.List<de.maxcars.Autos> autosList;
     private java.util.List<de.maxcars.Autos> autosList1;
+    private java.util.List<de.maxcars.Autos> autosList2;
     private javax.persistence.Query autosQuery;
     private javax.persistence.Query autosQuery1;
+    private javax.persistence.Query autosQuery2;
+    private javax.swing.JRadioButton brandRadioBtn;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField carColorTextField;
     private javax.swing.JTextField carEngineTextField;
+    private javax.swing.JTextField carMakeTextField;
+    private javax.swing.JTextField carMileageTextField;
     private javax.swing.JTextField carModelTextField;
+    private javax.swing.JTextArea carNotesTextArea;
     private javax.swing.JTextField carPriceTextField;
     private javax.swing.JTextField carVinTextField;
     private javax.swing.JFormattedTextField carYearFormattedTextField;
+    private javax.swing.JRadioButton colorRadioBtn;
+    private javax.swing.JTextField colorTextField;
+    private javax.swing.JButton deleteBtn;
+    private javax.swing.JTextField engineTextField;
     private javax.persistence.EntityManager entityManager;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JComboBox jComboBox5;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -871,6 +993,7 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -884,33 +1007,31 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JComboBox makesComboBox;
     private java.util.List<de.maxcars.Makes> makesList;
     private javax.persistence.Query makesQuery;
     private javax.swing.JTextField mileageTextField;
+    private javax.swing.JRadioButton modelRadioBtn;
+    private javax.swing.JTextField modelTextField;
     private javax.swing.JTextArea notesTextArea;
+    private javax.swing.JRadioButton priceRadioBtn;
+    private javax.swing.JTextField priceTextField;
     private javax.swing.JButton resetFieldsButton;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JTable searchResultTable;
+    private javax.swing.JTextField searchTextField;
+    private javax.swing.JComboBox selectCarIdComboBox;
     private javax.swing.JComboBox transmissionComboBox;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
+    private javax.swing.JTextField transmissionTextField;
+    private javax.swing.JButton updateBtn;
+    private javax.swing.JFormattedTextField vinTextField;
+    private javax.swing.JRadioButton yearRadioBtn;
+    private javax.swing.JTextField yearTextField;
     // End of variables declaration//GEN-END:variables
 }

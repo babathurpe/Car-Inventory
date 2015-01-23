@@ -232,7 +232,7 @@ public class Autos implements Serializable {
 
     @Override
     public String toString() {
-        return "de.maxcars.Autos[ id=" + id + " ]";
+        return make + "-" + model + "-" + vin;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
